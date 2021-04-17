@@ -177,28 +177,42 @@ describe('[Exercise 6] Car', () => {
 		expect(focus.odometer).toBe(30);
 	});
 	it('[16] driving the car uses gas', () => {
-		focus.drive(10);
-		expect(focus.tank).toBe(0);
+		const response = focus.drive(601);
+		expect(response).toBe(`I ran out of fuel at 600 miles!`);
 	});
 	it('[17] refueling allows to keep driving', () => {
-		// ✨ test away
+		focus.drive(600);
+		focus.refuel(10);
+		focus.drive(30);
+		expect(focus.tank).toBe(9);
 	});
 	it('[18] adding fuel to a full tank has no effect', () => {
-		// ✨ test away
+		focus.drive(60);
+		const res = focus.refuel(5);
+		expect(res).toBe('Tank is full!');
+		expect(focus.tank).toBe(focus.tankCap);
 	});
 });
 
 describe('[Exercise 7] isEvenNumberAsync', () => {
 	it('[19] resolves true if passed an even number', () => {
-		// ✨ test away
+		return utils.isEvenNumberAsync(2).then(res => {
+			expect(res).toBe(true);
+		});
 	});
 	it('[20] resolves false if passed an odd number', () => {
-		// ✨ test away
+		return utils.isEvenNumberAsync(3).then(res => {
+			expect(res).toBe(false);
+		});
 	});
 	it('[21] rejects an error with the message "number must be a number" if passed a non-number type', () => {
-		// ✨ test away
+		return utils.isEvenNumberAsync('two').catch(err => {
+			expect(err).toBe('number must be a number');
+		});
 	});
 	it('[22] rejects an error with the message "number must be a number" if passed NaN', () => {
-		// ✨ test away
+		return utils.isEvenNumberAsync(NaN).catch(err => {
+			expect(err).toBe('number must be a number');
+		});
 	});
 });
